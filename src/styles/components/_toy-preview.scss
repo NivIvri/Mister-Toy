@@ -1,0 +1,50 @@
+.toy-card {
+    padding: 29px;
+    display: flex;
+    flex-direction: column;
+    height: 450px;
+    grid-gap: 8px;
+    grid-gap: 8px;
+    gap: 8px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px #e6e5e5;
+    margin: 5px;
+
+    img {
+        height: 150px;
+        width: 150px;
+        object-fit: cover;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .red {
+        color: red;
+    }
+
+    div:first-child {
+        font-size: 30px;
+    }
+
+    &:hover {
+        box-shadow: 0px -1px 20px #554d4d;
+    }
+}
+
+.card-container {
+    position: relative;
+    .close-btn {
+        position: relative;
+        top: 41px;
+        left: 182px;
+        z-index: 5;
+        width: 31px;
+        border: none;
+        font-size: 29px;
+        background-color: #00000000;
+        cursor: pointer;
+    }
+}

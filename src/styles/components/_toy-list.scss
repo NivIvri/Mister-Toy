@@ -1,0 +1,6 @@
+.main-container-toy {
+    display: grid;
+    gap: 25px;
+    margin-top: 10px;
+    grid-template-columns: repeat( auto-fill, 216px);
+}

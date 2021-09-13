@@ -1,0 +1,24 @@
+.dashboard > * {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 900px;
+    border: 1px black solid;
+    padding: 10px;
+}
+
+.dashboard {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 30px;
+
+    & > * {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 900px;
+        border: 1px black solid;
+        padding: 10px;
+    }
+}

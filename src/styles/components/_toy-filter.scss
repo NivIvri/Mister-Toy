@@ -1,0 +1,7 @@
+.toy-form {
+    margin-top: 27px;
+    & > * {
+        flex: 1;
+        text-align: center;
+    }
+}
