@@ -10,6 +10,7 @@
 @import "basics/base.scss";
 
 // Components
+@import "components/root";
 @import "components/main-header.scss";
 @import "components/app-header.scss";
 @import "components/toy-list.scss";
@@ -19,3 +20,7 @@
 @import "components/toy-details";
 @import "components/toy-preview.scss";
 @import "components/toy-edit";
+@import "components/toy-app";
+@import "components/chat";
+@import "components/add-review";
+@import "components/login-signup";

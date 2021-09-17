@@ -3,12 +3,15 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 
 export function onLogin(credentials) {
     return (dispatch) => {
-        userService.login(credentials)
-            .then(user => dispatch({
-                type: 'SET_USER',
-                user
-            }),
-            showSuccessMsg('user Login')
+        return userService.login(credentials)
+            .then(user => {
+                dispatch({
+                    type: 'SET_USER',
+                    user
+                })
+
+                return user
+            }
 
             )
             .catch(err => {
@@ -20,22 +23,21 @@ export function onLogin(credentials) {
 
 export function onSignup(credentials) {
     return (dispatch) => {
-        userService.signup(credentials)
-        .then(user => {
-                console.log(user , 'user in action');
+        return userService.signup(credentials)
+            .then(user => {
+                console.log(user, 'user in action');
                 console.log(user);
                 dispatch({
                     type: 'SET_USER',
                     user
                 })
                 showSuccessMsg('user sign up')
-
+                return user
             })
             .catch(err => {
                 showErrorMsg('Cannot signup')
                 console.log('Cannot signup', err)
             })
-
     }
 }
 

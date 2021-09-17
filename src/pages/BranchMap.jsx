@@ -61,9 +61,9 @@ export class _BranchMap extends React.Component {
                         </InfoWindow>
                     </Map>
                     <div className='btn-nav-map'>
-                        <Button style={{ height: '55px', width: '149px' }} onClick={() => { this.changeCenter({ lat: 32.076532115992784, lng: 34.780556401482 }) }} variant="contained" color="primary">Tel Aviv</Button>
-                        <Button style={{ height: '55px', width: '149px' }} onClick={() => { this.changeCenter({ lat: 32.42962406784195, lng: 34.92192889615041 }) }} variant="contained" color="primary">Hadera</Button>
-                        <Button style={{ height: '55px', width: '149px' }} onClick={() => { this.changeCenter({ lat: 32.01186717636824, lng: 34.74877601302463 }) }} variant="contained" color="primary">Bat Yam</Button>
+                        <Button  onClick={() => { this.changeCenter({ lat: 32.076532115992784, lng: 34.780556401482 }) }} variant="outlined" color="primary">Tel Aviv</Button>
+                        <Button  onClick={() => { this.changeCenter({ lat: 32.42962406784195, lng: 34.92192889615041 }) }} variant="outlined" color="primary">Hadera</Button>
+                        <Button  onClick={() => { this.changeCenter({ lat: 32.01186717636824, lng: 34.74877601302463 }) }} variant="outlined" color="primary">Bat Yam</Button>
                     </div>
                     <div>
                         <AccordionFAQs />
@@ -75,5 +75,5 @@ export class _BranchMap extends React.Component {
 }
 
 export const BranchMap = GoogleApiWrapper({
-    apiKey: ('AIzaSyBJt1HJ2UX7AlXY9pgE_f3VQena2BBVFVg')
+    apiKey: ('AIzaSyDU7dioNfhFTADeUY7K0oPN80S90jOUBpI')
 })(_BranchMap)

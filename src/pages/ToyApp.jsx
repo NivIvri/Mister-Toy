@@ -3,13 +3,19 @@ import { ToyList } from "../cmps/ToyList.jsx";
 import { loadToys, onRemove } from '../store/toy.actions.js'
 import React from 'react'
 import { connect } from 'react-redux'
+import intercom from '../assets/img/intercom.jpg';
+import ChatApp from "../cmps/ChatApp.jsx";
+import { Loading } from "../cmps/Loading.jsx";
 
 
 
 class _ToyApp extends React.Component {
-    state = {}
+    state = {
+        isChat: false
+    }
     componentDidMount() {
         this.props.loadToys(this.props.filterBy)
+        if (!this.props.user) this.props.history.push("/");
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -23,13 +29,22 @@ class _ToyApp extends React.Component {
         this.props.onRemove(toyId);
     }
 
+    toggleChat = () => {
+        this.setState({ isChat: !this.state.isChat })
+    }
+
+
+
     render() {
         const { toys } = this.props
-        if (!toys) return <div>loadingg</div>
+
+        if (!toys) return <Loading />
         return (
             <section className="main-container">
-                    <ToyFilter />
-                    <ToyList onRemove={this.onRemove} toys={this.props.toys} />
+                <img className='intercom' src={intercom} alt={'intercom'} onClick={this.toggleChat} />
+                {this.state.isChat && <ChatApp />}
+                <ToyFilter />
+                <ToyList onRemove={this.onRemove} toys={this.props.toys} />
             </section>
         )
     }
@@ -39,6 +54,7 @@ function mapStateToProps(state) {
     return {
         filterBy: state.toyModule.filterBy,
         toys: state.toyModule.toys,
+        user: state.userModule.user
     }
 }
 

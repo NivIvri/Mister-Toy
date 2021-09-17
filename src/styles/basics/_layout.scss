@@ -28,10 +28,26 @@
     @include for-wide-layout {
         grid-template-columns:
         1fr
-        minmax(auto, 1200px)
+        minmax(auto, $normal-breakpoint)
         1fr;  
     }
 }
+//.main-container {
+//    @include for-narrow-layout {
+//        margin: 0 auto;
+//        max-width: 400px;
+//    }
+
+//    @include for-normal-layout {
+//        margin: 0 auto;
+//        max-width: 970px;
+//    }
+
+//    @include for-wide-layout {
+//        margin: 0 auto;
+//        max-width: 1200px;
+//    }
+//}
 
 // Main Header Layout
 

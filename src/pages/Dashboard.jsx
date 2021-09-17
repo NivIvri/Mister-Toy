@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Doughnut } from 'react-chartjs-2';
 import { loadToys } from '../store/toy.actions.js'
 import { MainLayout } from '../cmps/layout/MainLayout.jsx';
+import { Loading } from '../cmps/Loading.jsx';
 
 class _Dashboard extends React.Component {
 
@@ -102,7 +103,7 @@ class _Dashboard extends React.Component {
 
     render() {
 
-        if (!this.props.toys.length) return <div>loading</div>
+        if (!this.props.toys.length) return <Loading/>
         if (this.props.toys.length) { this.getFirstData() }
         return (
             <MainLayout>

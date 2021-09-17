@@ -1,4 +1,4 @@
-import { toyService } from "../services/toyService";
+import { toyService } from "../services/toy.service.js";
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 
 export function loadToys(filterBy) {
@@ -15,7 +15,6 @@ export function loadToys(filterBy) {
 
 export function onRemove(toyId) {
     return (dispatch) => {
-        debugger
         toyService.remove(toyId).then(
             () => {
                 dispatch(
@@ -40,6 +39,7 @@ export function onSave(toy) {
     return (dispatch) => {
         if (!toy.name || !toy.labels) return
         if (toy._id) {
+
             return toyService.update(toy).then(() => {
                 dispatch({
                     type: 'UPDATE_TOY',
@@ -53,6 +53,7 @@ export function onSave(toy) {
                     type: 'ADD_TOY',
                     toy
                 })
+                console.log(toy,'toy action');
                 return toy
             })
 

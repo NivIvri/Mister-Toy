@@ -1,0 +1,17 @@
+.login-form,
+.signup-form {
+    display: FLEX;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 216px;
+    gap: 16px;
+    height: 400px;
+}
+
+.login-page {
+    p {
+        text-align: center;
+        font-size: 30px;
+    }
+
+}

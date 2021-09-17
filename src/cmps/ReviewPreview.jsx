@@ -5,9 +5,9 @@ export function ReviewPreview({ review, onRemoveReview }) {
     <div className="card-review">
 
       <div className="review-info">
+        <span className="review-username"> {review.userName ? review.userName : 'AB'}</span>
         <span className="review-name"> {review.name}</span>
         <small className="review-date"> {new Date(review.date).toLocaleString('he-IL')}</small>
-
       </div>
       <div>
         {review.rate >= 1 && <img src={star} alt='star' />}

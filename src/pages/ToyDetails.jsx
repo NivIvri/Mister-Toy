@@ -12,6 +12,7 @@ import toyImg1 from '../assets/img/toyImg1.jpg';
 import toyImg2 from '../assets/img/toyImg2.jpg';
 import toyImg3 from '../assets/img/toyImg3.png';
 import toyImg4 from '../assets/img/toyImg4.jpg';
+import { Loading } from '../cmps/Loading.jsx'
 
 
 class _ToyDetails extends React.Component {
@@ -19,12 +20,10 @@ class _ToyDetails extends React.Component {
         toy: null
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const { toyId } = this.props.match.params
-        this.props.onGetById(toyId).then((toy) => {
-            this.setState({ toy }, console.log(this.state.toy))
-        }
-        )
+        const toy = await this.props.onGetById(toyId)
+        this.setState({ toy }, console.log(this.state.toy))
     }
 
     getSrc = (toyimgNum) => {
@@ -41,7 +40,7 @@ class _ToyDetails extends React.Component {
     }
     render() {
         const { toy } = this.state
-        if (!toy) return <div>loading</div>
+        if (!toy) return <Loading />
         return (
             <MainLayout>
                 <div className='details'>
@@ -72,8 +71,15 @@ class _ToyDetails extends React.Component {
                                     </tr>}
                                 </tbody>
                             </table>
-                            <Link to={`/toy/edit/${toy._id}`}> <Button variant="outlined">Edit</Button>
+                            <div className="btn-conatiner">
+                            <Link to={`/toy/edit/${toy._id}`}> <Button style={{
+                                width: '90px'
+                            }} variant="outlined">Edit</Button>
                             </Link>
+                            <Link to={`/toy/review/${toy._id}`}>
+                                <Button  variant="outlined">Write a Review</Button>
+                            </Link>
+                            </div>
                         </div>
                     </div>
 

@@ -16,7 +16,8 @@ export function ToyPreview({ onRemove, toy }) {
                 return toyImg3
             case 4:
                 return toyImg4
-         
+            default:
+                return toyImg4
         }
     }
     return (
@@ -24,16 +25,14 @@ export function ToyPreview({ onRemove, toy }) {
             <button className='close-btn' onClick={(ev) => {
                 onRemove(ev, toy._id)
             }}>x</button>
-            <Link to={`/toy/${toy._id}`}  className='text-link'>
+            <Link to={`/toy/${toy._id}`} className='text-link'>
                 <div className='toy-card'>
-                    {/*<div className="toy-card-container">*/}
                     <img src={getSrc(toy.imgNum)} alt='toy img' />
                     <h3> {toy.name}</h3>
                     <div> {toy.labels.map(lable => <span>|{lable}</span>)}</div>
                     <div> {toy.price}$</div>
                     <div>Add at: {new Date(toy.createdAt).toLocaleString('he-IL')}</div>
-                    <div className={toy.inStock ? 'green' : 'red'}> {toy.inStock ? 'stock availability!' : 'Not availability'}</div>
-                    {/*</div>*/}
+                    <div className={toy.inStock ? 'green' : 'red'}> {toy.inStock ? 'Stock availability!' : 'Not availability'}</div>
                 </div>
             </Link>
         </div>

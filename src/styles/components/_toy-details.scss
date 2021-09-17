@@ -8,14 +8,9 @@
     }
 
     .detail_right,
-    .review-conatiner
-     {
-        background: #fff;
-        border-radius: 10px;
-        padding: 20px 20px;
-        box-shadow: 0px 0px 8px #e6e5e5;
-        margin-bottom: 20px;
-        height: 90vh;
+    .review-conatiner {
+        @include white-box;
+
         .img {
             height: 350px;
             width: 300px;
@@ -38,27 +33,37 @@
         }
 
         h1 {
-            font-family: "UniformRnd-Bold", Arial, sans-serif;
             overflow: hidden;
             text-overflow: ellipsis;
             font-size: 20px;
         }
-    }
 
+        a {
+            align-self: center;
+        }
+    }
 
     td img {
         height: 20px;
     }
+
+    .btn-conatiner {
+        margin-top: 5px;
+        display: flex;
+        justify-content: center;
+        gap: 22px;
+    }
 }
 
 .card-review {
-    width: 80%;
+    width: 95%;
     margin: 0 auto;
     padding: 21px 21px;
-    background-color: #fff8f8ba;
+    background-color: #f8f5f55c;
     border-radius: 10px;
-    box-shadow: -1px 0px 6px 0px black;
+    box-shadow: -1px 0px 9px 0px #bbb7b7;
     margin-bottom: 18px;
+    font-size: 15px;
     img {
         height: 20px;
         padding: 0;
@@ -71,5 +76,22 @@
         small {
             color: gray;
         }
+    }
+
+    .review-username{
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        min-width: 44px;
+        height: 44px;
+        min-height: 44px;
+        border-radius: 50%;
+        font-size: 14px;
+        font-size: .875rem;
+        line-height: 20px;
+        line-height: 1.25rem;
+        font-weight: 700;
+        background: #cccac7;
+        display: inline-flex;
     }
 }

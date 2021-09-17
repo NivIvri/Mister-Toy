@@ -1,13 +1,19 @@
+import { AddReview } from './pages/AddReview.jsx'
 import { BranchMap } from './pages/BranchMap.jsx'
 import { Dashboard } from './pages/Dashboard.jsx'
+import { Signin } from './pages/signin.jsx'
 import {  ToyApp} from './pages/ToyApp.jsx'
 import { ToyDetails } from './pages/ToyDetails.jsx'
 import { ToyEdit } from './pages/ToyEdit.jsx'
-import { UserProfile } from './pages/UserProfile.jsx'
+import { Signup } from './pages/signup.jsx'
 
 export default [
     {
         path: '/',
+        component: Signin,
+    },
+    {
+        path: '/home',
         component: ToyApp,
     },
     {
@@ -26,10 +32,13 @@ export default [
         path: '/toy/:toyId',
         component: ToyDetails,
     },
-    
     {
-        path: '/userPage',
-        component: UserProfile,
+        path: '/toy/review/:toyId',
+        component: AddReview,
     },
+    {
+        path: '/signup',
+        component: Signup,
+    }
  
 ]

@@ -1,0 +1,60 @@
+/*AddReview*/
+
+.star-rating button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 50px;
+}
+
+.on {
+    color: yellow;
+}
+
+.off {
+    color: #ccc;
+}
+
+.textarea {
+    height: 132px;
+    font-size: 20px;
+}
+
+.reviews-add-title {
+    height: 80px;
+    font-size: 30px;
+}
+
+.reviews-add-title span {
+    font-weight: 900;
+    font-size: 35px;
+    margin-left: 5px;
+}
+
+.add-review-container {
+    width: 1000px;
+    display: flex;
+    padding-bottom: 106px;
+    flex-direction: column;
+    margin: 0 auto;
+    justify-content: center;
+    background-color: aliceblue;
+    padding: 20px 30px;
+    height: 67vh;
+    & > * {
+        margin-top: 10px;
+    }
+
+    
+}
+
+.add-review-btn {
+    align-self: center;
+    width: 100%;
+    height: 50px;
+    background-color: #015899;
+    border: 1px solid #015899;
+    font-size: 20px;
+}
+
