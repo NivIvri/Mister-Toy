@@ -1,8 +1,12 @@
 import Axios from 'axios'
+import { httpService } from './http.service';
 const axios = Axios.create({
     withCredentials: true
 });
 
+const BASE_URL = (process.env.NODE_ENV == 'production')
+    ? '/api/auth'
+    : 'http://localhost:3030/api/auth';
 
 
 const STORAGE_KEY_LOGGEDIN = 'loggedinUser'
@@ -11,32 +15,42 @@ export const userService = {
     login,
     logout,
     signup,
-    getLoggedinUser
+    getLoggedinUser,
+    getById
 }
 
 window.userService = userService;
 
-function login(credentials) {
-    console.log(credentials, 'credentials');
-    return axios.post('http://localhost:3030/api/auth/login', credentials).then(res => res.data).then(user => {
-        if (user) {
-            sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(user))
-        }
-        return user;
-    })
-}
-function signup(userInfo) {
-    return axios.post('http://localhost:3030/api/auth/signup', userInfo).then(res => res.data).then(user => {
+async function login(credentials) {
+    let res = await axios.post(`${BASE_URL}/login`, credentials)
+    let user = res.data
+    if (user) {
         sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(user))
-        return user;
-    })
+    }
+    return user;
 }
-function logout() {
-    axios.post('http://localhost:3030/api/auth/logout').then(res => console.log(res + 'res'))
+async function signup(userInfo) {
+    let res = await axios.post(`${BASE_URL}/signup`, userInfo)
+    //let res = await axios.post('http://localhost:3030/api/auth/signup', userInfo)
+    let user = res.data
+    sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(user))
+    return user;
+}
+
+
+async function logout() {
+    await httpService.get('auth/logout')
+    sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, null)
     return Promise.resolve()
 }
 
 function getLoggedinUser() {
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN))
 }
+
+async function getById(userId) {
+    const user = await httpService.get(`user/${userId}`)
+    return user;
+}
+
 

@@ -13,6 +13,7 @@ import Container from '@material-ui/core/Container';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { onLogin, onSignup, onLogout } from '../store/user.actions.js'
+import user from '../assets/img/user.png'
 
 
 
@@ -85,7 +86,7 @@ class _Signup extends React.Component {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              {/*<LockOutlinedIcon />*/}
+            <img style={{ height: "28px" }} src={user} />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign up

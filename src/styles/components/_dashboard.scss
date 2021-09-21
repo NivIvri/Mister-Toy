@@ -1,6 +1,5 @@
 .dashboard {
     display: flex;
-    flex-direction: row;
     align-items: center;
     gap: 30px;
     margin-top: 30px;
@@ -15,16 +14,19 @@
         padding: 10px;
     }
 
-    @include for-mobile-layout {
+    @include for-narrow-layout {
         flex-direction: column;
     }
-    @include for-narrow-layout {
+
+    @include for-wide-layout {
         flex-direction: row;
         flex-wrap: wrap;
     }
     @include for-normal-layout {
-        flex-wrap: unset;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
+
 }
 
 //@mixin for-narrow-layout {

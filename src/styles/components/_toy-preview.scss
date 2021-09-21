@@ -17,6 +17,14 @@
         object-fit: cover;
     }
 
+    .out-of-stock {
+        width: 232px;
+        height: 73px;
+        position: absolute;
+        top: 64px;
+        right: 23px;
+        transform: rotate(321deg);
+    }
     .green {
         color: green;
     }

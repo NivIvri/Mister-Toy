@@ -7,12 +7,16 @@ import { AppFooter } from './cmps/AppFooter.jsx'
 //import {AppFooter} from './cmps/app-footer.jsx'
 
 export class RootCmp extends React.Component {
+    onToggleMenu = () => {
+        document.body.classList.toggle('menu-open')
+    }
 
     render() {
         return (
             <>
                 <AppHeader />
                 <main>
+                <div className="screen" onClick={this.onToggleMenu}></div>
                     <Switch>
                         {routes.map(route => <Route key={route.path} exact component={route.component} path={route.path} />)}
                     </Switch>

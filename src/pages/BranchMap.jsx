@@ -14,7 +14,6 @@ export class _BranchMap extends React.Component {
     }
 
     changeCenter = (center) => {
-        debugger
         this.setState({ center: { lat: center.lat, lng: center.lng } })
     }
 

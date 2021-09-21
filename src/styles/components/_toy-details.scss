@@ -53,8 +53,19 @@
         justify-content: center;
         gap: 22px;
     }
-}
 
+    @include for-narrow-layout {
+        flex-direction: column;
+    }
+    @include for-mobile-layout {
+        flex-direction: column;
+    }
+    @include  for-normal-layout {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+}
 .card-review {
     width: 95%;
     margin: 0 auto;
@@ -64,11 +75,16 @@
     box-shadow: -1px 0px 9px 0px #bbb7b7;
     margin-bottom: 18px;
     font-size: 15px;
+    position: relative;
     img {
         height: 20px;
         padding: 0;
     }
-
+    img.closer {
+        position: absolute;
+        top: 14px;
+        right: 22px;
+    }
     .review-info {
         &:first-child {
             margin-right: 25px;
@@ -78,7 +94,7 @@
         }
     }
 
-    .review-username{
+    .review-username {
         align-items: center;
         justify-content: center;
         width: 44px;
@@ -87,11 +103,17 @@
         min-height: 44px;
         border-radius: 50%;
         font-size: 14px;
-        font-size: .875rem;
+        font-size: 0.875rem;
         line-height: 20px;
         line-height: 1.25rem;
         font-weight: 700;
         background: #cccac7;
         display: inline-flex;
+        cursor: pointer;
+
+        &:hover {
+            background: #c0c0bf;
+            box-shadow: 0px 0px 7px 0px #80808078;
+        }
     }
 }

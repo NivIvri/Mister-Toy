@@ -2,6 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { ReviewList } from '../cmps/ReviewList'
+import { addReview, removeReview, loadReviews } from '../store/review.actions.js'
 import { onGetById } from '../store/toy.actions'
 import { Link } from 'react-router-dom'
 import { MainLayout } from '../cmps/layout/MainLayout.jsx';
@@ -17,13 +18,17 @@ import { Loading } from '../cmps/Loading.jsx'
 
 class _ToyDetails extends React.Component {
     state = {
-        toy: null
+        toy: ''
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.loadToy()
+    }
+
+    loadToy = async () => {
         const { toyId } = this.props.match.params
-        const toy = await this.props.onGetById(toyId)
-        this.setState({ toy }, console.log(this.state.toy))
+        let newToy = await this.props.onGetById(toyId)
+        this.setState({ toy: newToy })
     }
 
     getSrc = (toyimgNum) => {
@@ -36,8 +41,17 @@ class _ToyDetails extends React.Component {
                 return toyImg3
             case 4:
                 return toyImg4
+            default:
+                return toyimgNum
         }
     }
+
+    onRemoveReview = async (reviewId) => {
+        await this.props.removeReview(reviewId)
+        this.loadToy()
+    }
+
+
     render() {
         const { toy } = this.state
         if (!toy) return <Loading />
@@ -46,7 +60,7 @@ class _ToyDetails extends React.Component {
                 <div className='details'>
                     <div className='toy-info'>
                         <div className='detail_right'>
-                            <h1 className='name-details'>  {toy.name}</h1>
+                            <h1 className='name-details'> {toy.name}</h1>
                             <div className='price'>  {toy.price}$</div>
                             <div> {toy.labels.map(lable => <span>|{lable}</span>)}</div>
                             <div className="div-separator"></div>
@@ -72,21 +86,22 @@ class _ToyDetails extends React.Component {
                                 </tbody>
                             </table>
                             <div className="btn-conatiner">
-                            <Link to={`/toy/edit/${toy._id}`}> <Button style={{
-                                width: '90px'
-                            }} variant="outlined">Edit</Button>
-                            </Link>
-                            <Link to={`/toy/review/${toy._id}`}>
-                                <Button  variant="outlined">Write a Review</Button>
-                            </Link>
+                                <Link to={`/toy/edit/${toy._id}`}> <Button style={{
+                                    width: '90px'
+                                }} variant="outlined">Edit</Button>
+                                </Link>
+
+                                {this.props.user &&
+                                    <Link to={`/toy/add/review/${toy._id}`}>
+                                        <Button variant="outlined">Write a Review</Button>
+                                    </Link>
+                                }
                             </div>
                         </div>
                     </div>
 
                     <div className='review-conatiner'>
-
-                        <ReviewList toy={toy} />
-
+                        <ReviewList toy={this.state.toy} user={this.props.user} onRemoveReview={this.onRemoveReview} />
                     </div>
                 </div>
             </MainLayout>
@@ -98,12 +113,15 @@ class _ToyDetails extends React.Component {
 function mapStateToProps(state) {
     return {
         filterBy: state.toyModule.filterBy,
-        toys: state.toyModule.toys,
+        user: state.userModule.user
     }
 }
 
 const mapDispatchToProps = {
-    onGetById
+    onGetById,
+    addReview,
+    removeReview,
+    loadReviews
 }
 
 export const ToyDetails = connect(mapStateToProps, mapDispatchToProps)(_ToyDetails)

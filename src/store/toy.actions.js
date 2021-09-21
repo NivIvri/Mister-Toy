@@ -2,70 +2,60 @@ import { toyService } from "../services/toy.service.js";
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 
 export function loadToys(filterBy) {
-    return (dispatch) => {
-        toyService.query(filterBy)
-            .then(toys => {
-                dispatch({
-                    type: 'SET_TOYS',
-                    toys
-                })
-            })
+    return async (dispatch) => {
+        const toys = await toyService.query(filterBy)
+        dispatch({
+            type: 'SET_TOYS',
+            toys
+        })
     }
 }
 
 export function onRemove(toyId) {
-    return (dispatch) => {
-        toyService.remove(toyId).then(
-            () => {
-                dispatch(
-                    {
-                        type: 'REMOVE_TOY',
-                        toyId
-                    })
-                showSuccessMsg('TOY removed')
-            }
+    return async (dispatch) => {
+        await toyService.remove(toyId)
+        try {
 
-        )
+            dispatch(
+                {
+                    type: 'REMOVE_TOY',
+                    toyId
+                })
+            showSuccessMsg('TOY removed')
+        }
 
-            .catch(err => {
-                showErrorMsg('Cannot remove TOY')
-            })
-
+        catch (err) {
+            showErrorMsg('Cannot remove TOY:', err)
+        }
     }
 }
 
 
 export function onSave(toy) {
-    return (dispatch) => {
+    return async (dispatch) => {
         if (!toy.name || !toy.labels) return
         if (toy._id) {
-
-            return toyService.update(toy).then(() => {
-                dispatch({
-                    type: 'UPDATE_TOY',
-                    toy
-                })
+            await toyService.update(toy)
+            dispatch({
+                type: 'UPDATE_TOY',
+                toy
             })
         }
         else {
-            return toyService.add(toy).then((toy) => {
-                dispatch({
-                    type: 'ADD_TOY',
-                    toy
-                })
-                console.log(toy,'toy action');
-                return toy
+            let newtoy = await toyService.add(toy)
+            dispatch({
+                type: 'ADD_TOY',
+                toy:newtoy
             })
-
+            return newtoy
         }
     }
 }
 
 export function onGetById(toyId) {
-    return () => {
-        return toyService.getById(toyId).then(
-            (toy) => { return toy }
-        )
+    return async () => {
+        const toy = await toyService.getById(toyId)
+        return toy
     }
 }
 

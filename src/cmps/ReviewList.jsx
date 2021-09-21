@@ -1,15 +1,29 @@
-import React from 'react'
-import { ReviewPreview } from "./ReviewPreview.jsx";
+import React, { Component } from 'react'
+import { userService } from '../services/user.service'
+import { Loading } from './Loading'
+import { ReviewPreview } from './ReviewPreview.jsx'
 
-export function ReviewList({ toy , onRemoveReview }) {
-  console.log('toy.reviews');
-  console.log(toy.reviews,'toy.reviews');
-  return (
-    <section className="review">
-      {toy.reviews.map((review) => {
-        return <ReviewPreview key={review.id}  onRemoveReview={onRemoveReview} review={review} />;
-      })}
-    </section>
-  );
+export class ReviewList extends Component {
+  state = {
+    toy: ''
+  }
+  componentDidMount() {
+    const toy = this.props.toy
+    this.setState({ toy }, console.log('toy', this.state.toy))
+  }
+
+  render() {
+    const { toy } = this.state
+    if (!toy) return <Loading />
+    return (
+      <section className="review">
+        {toy.givenReviews.map((review) => {
+          console.log(review);
+          return <ReviewPreview key={review._id} onRemoveReview={this.props.onRemoveReview} user={this.props.user} review={review} />;
+        })}
+      </section>
+    );
+  }
 }
+
 

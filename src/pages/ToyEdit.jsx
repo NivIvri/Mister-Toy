@@ -9,6 +9,8 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { MainLayout } from '../cmps/layout/MainLayout';
 import { Loading } from '../cmps/Loading';
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 
 const animatedComponents = makeAnimated();
 
@@ -39,7 +41,7 @@ class _ToyEdit extends React.Component {
         if (!toyId) {
             //save
             const toy = {
-                name: "new toy",
+                name: "New toy",
                 price: 100,
                 labels: ["Doll", "Baby"],
                 createdAt: Date.now(),
@@ -78,14 +80,48 @@ class _ToyEdit extends React.Component {
 
     onSave = async (ev) => {
         ev.preventDefault()
+        debugger
         let toy = await this.props.onSave(this.state.toy)
+        console.log(toy, 'toy');
         if (this.state.toy._id) {
+
             this.props.history.push(`/toy/${this.state.toy._id}`)
         }
         else {
             this.props.history.push(`/toy/${toy._id}`)
         }
     }
+
+
+
+    uploadImg = (ev) => {
+        const CLOUD_NAME = 'dfzhknfgk'
+        const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
+
+        const formData = new FormData();
+        console.log('target', ev.target)
+        formData.append('file', ev.target.files[0])
+        console.log('ev.target.files[0]):', ev.target.files[0])
+        formData.append('upload_preset', 'ruvgrbcf');
+        console.log('formData:', formData)
+
+        return fetch(UPLOAD_URL, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(res => {
+                const elImg = document.createElement('img');
+                elImg.src = res.url;
+                console.log(elImg.src,'elImg.src');
+                this.setState((prevState) => ({
+                    toy: { ...prevState.toy, imgNum: elImg.src },
+                }));
+                //document.body.append(elImg);
+            })
+            .catch(err => console.error(err))
+    }
+
 
     render() {
         const { toy } = this.state
@@ -104,12 +140,12 @@ class _ToyEdit extends React.Component {
 
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>NAME</td>
-                                <td><input name='name' type='text' value={toy.name} onChange={this.handleChange} /></td>
+                            <tr style={{marginTop:"100px"}}>
+                                <td>NAME: </td>
+                                <td><Input  name='name' type='text' value={toy.name} onChange={this.handleChange} /></td>
                             </tr>
-                            <tr>
-                                <td>labels</td>
+                            <tr style={{marginTop:"10px"}}>
+                                <td>Labels:</td>
                                 <td> <Select
                                     onChange={(e) => this.handleChange({ 'target': e })}
                                     name='label'
@@ -121,12 +157,18 @@ class _ToyEdit extends React.Component {
                                 />
                                 </td>
                             </tr>
-                            <tr>
-                                <td>price</td>
-                                <td><input name='price' type='number' value={toy.price} onChange={this.handleChange} /></td>
+                            <tr style={{marginTop:"100px"}}>
+                                <td>Price: </td>
+                                <td><Input name='price' type='number' value={toy.price} onChange={this.handleChange} /></td>
 
                             </tr>
-                            <tr><td colSpan="2">  <button onClick={this.onSave} type='submit' className='save-btn'>save</button></td></tr>
+                            <tr>
+                                <td>Img: </td>
+                                <td> <Input onChange={(ev) => this.uploadImg(ev)} type='file' />
+                                </td>
+
+                            </tr>
+                            <tr><td style={{textAlign:"center"}}  colSpan="2">  <Button  style={{marginTop:'20px'}} color="primary" variant='outlined' onClick={this.onSave} type='submit' className='save-btn'>save</Button></td></tr>
                         </tbody>
                     </table>
 

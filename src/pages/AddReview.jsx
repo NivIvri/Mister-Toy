@@ -1,54 +1,52 @@
+import React from 'react'
 import { StarRating } from "../cmps/StarsReview.jsx";
 import { eventBusService } from "../services/event-bus.service.js";
-import { utilService } from "../services/util.service.js";
-import React from 'react'
+//import { utilService } from "../services/util.service.js";
 import { toyService } from "../services/toy.service.js";
+import { addReview, loadReviews, removeReview } from "../store/review.actions.js";
 import { connect } from 'react-redux'
+import Button from '@material-ui/core/Button';
 
 class _AddReview extends React.Component {
   state = {
-    toy: "",
     review: {
-      userName: this.props.user.username ,
       txt: null,
       rate: null,
-      name: "Toys Reader",
-      date: new Date().toDateString(),
-      id: utilService.makeId(),
-    },
+      toyId: null
+    }
   };
 
   componentDidMount() {
-    this.loadToy();
+
     this.removeEventBus = eventBusService.on("rating", (starsCount) => {
       this.setState((prevState) => ({
         review: { ...prevState.review, rate: starsCount },
       }));
     });
+
+    const { toyId } = this.props.match.params
+    this.props.loadReviews()
+    this.setState((prevState) => ({
+      review: { ...prevState.review, toyId },
+    }));
+
   }
 
   componentWillUnmount() {
     this.removeEventBus();
   }
 
-  loadToy = () => {
+  loadToy = async () => {
     const id = this.props.match.params.toyId;
-    toyService.getById(id).then((toy) => {
-      if (!toy) this.props.history.push("/");
-      this.setState({ toy });
-    });
+    let toy = await toyService.getById(id)
+    if (!toy) this.props.history.push("/");
+    this.setState({ toy });
   };
 
-  onSaveReview = (ev) => {
+  onSaveReview = async (ev) => {
     ev.preventDefault();
-    toyService.addReview(this.props.match.params.toyId, this.state.review)
-      .then(() => {
-        eventBusService.emit("user-msg", {
-          txt: "review addes!",
-          type: "done",
-        });
-      })
-      .then(() => this.props.history.push(`/toy/${this.props.match.params.toyId}`));
+    await this.props.addReview(this.state.review)
+    this.props.history.push(`/toy/${this.props.match.params.toyId}`)
   };
 
   handleChange = ({ target }) => {
@@ -59,29 +57,32 @@ class _AddReview extends React.Component {
   };
 
   render() {
-    const { toy } = this.state;
-    if (!toy) return <div>loading</div>;
+    const { review } = this.state;
+    console.log(review);
+    //if (!review.name) return <div>loading</div>;
     return (
       <form className="add-review-container" onSubmit={this.onSaveReview}>
         <div className="reviews-add_title">
-          Write a Review for:
-          <span>{toy.title}</span>
+          <h1>Write a Review </h1>
         </div>
         <StarRating />
         <div>
           Your review will help millions of consumers find trustworthy online
-          businesses and avoid scams.
+
         </div>
         <textarea
           onChange={this.handleChange}
-          name="content"
+          name="txt"
           className="textarea"
           id="review_content"
           placeholder="Write your review to help others learn about this business"
           required="required"
           rows="5"
         ></textarea>
-        <button className="add-review-btn">Submit your review</button>
+        <div><Button onClick={this.onSaveReview} color='primary' variant="contained">Submit your review</Button>
+        
+
+        </div>
       </form>
     );
   }
@@ -90,12 +91,13 @@ class _AddReview extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.userModule.user
+    user: state.userModule.user,
+    reviews: state.reviewModule.reviews,
   }
 }
 
 const mapDispatchToProps = {
-  
+  addReview, loadReviews, removeReview
 }
 
 export const AddReview = connect(mapStateToProps, mapDispatchToProps)(_AddReview)

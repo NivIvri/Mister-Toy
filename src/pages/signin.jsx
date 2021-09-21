@@ -13,6 +13,7 @@ import Container from '@material-ui/core/Container';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { onLogin, onSignup, onLogout } from '../store/user.actions.js'
+import enter from '../assets/img/enter.png'
 
 function Copyright(props) {
   return (
@@ -83,7 +84,7 @@ class _Signin extends React.Component {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              {/*<LockOutlinedIcon />*/}
+              <img style={{ height: "30px" }} src={enter} />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in

@@ -18,12 +18,19 @@ nav {
         height: 70px;
         width: 80px;
     }
+
     .logo-store {
         text-align: left;
         display: flex;
         align-items: center;
         gap: 8px;
         font-size: 25px;
+
+        @include for-mobile-layout {
+            & span {
+                display: none;
+            }
+        }
     }
 
     .logo {
@@ -35,9 +42,78 @@ nav {
         display: flex;
         gap: 11px;
         text-align: right;
+
+        img {
+            height: 25px;
+            width: 25px;
+            object-fit: cover;
+            margin-left: 6px;
+        }
+    }
+    .btn-menu-toggle {
+        display: none;
+    }
+    @include for-mobile-layout {
+        .nav-user-page {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            background: aliceblue;
+            color: black;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            z-index: 10;
+            transform: translateX(100%);
+            transition: 0.6s;
+
+            button {
+                border-bottom: 1px solid #00000033;
+                padding: 20px 40px;
+                width: 100%;
+                text-align: center;
+            }
+        }
+        .btn-menu-toggle {
+            display: block;
+            border: none;
+            background: #f0f8ff00;
+            img {
+                height: 30px;
+            }
+        }
     }
 }
 
+@include for-mobile-layout {
+    body.menu-open .nav-user-page {
+        transform: translateX(0);
+        transition: 0.6s;
+    }
+
+    .screen {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.342);
+        //display: none;
+        z-index: 7;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.6s;
+        cursor: pointer;
+    }
+
+    body.menu-open .screen {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateX(0);
+        transition: 0.6s;
+    }
+}
 footer {
     padding: 5px 0px;
     background: #c2c8c8d4;

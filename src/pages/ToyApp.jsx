@@ -15,7 +15,7 @@ class _ToyApp extends React.Component {
     }
     componentDidMount() {
         this.props.loadToys(this.props.filterBy)
-        if (!this.props.user) this.props.history.push("/");
+        //if (!this.props.user) this.props.history.push("/");
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -32,8 +32,7 @@ class _ToyApp extends React.Component {
     toggleChat = () => {
         this.setState({ isChat: !this.state.isChat })
     }
-
-
+   
 
     render() {
         const { toys } = this.props

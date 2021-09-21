@@ -34,7 +34,6 @@ export function toyReducer(state = initialState, action) {
 
             break;
         case 'REMOVE_TOY':
-            debugger
             toys = state.toys.filter(toy => (toy._id !== action.toyId));
             newState = { ...state, toys }
             break;

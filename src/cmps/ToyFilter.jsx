@@ -65,6 +65,7 @@ function _ToyFilter(props) {
                     <Link to={`/toy/edit`}><Button variant="outlined">Add new toy</Button></Link>
                 </Grid>
 
+
             </Grid>
         </form>
     )
